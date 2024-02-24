@@ -1,17 +1,17 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc , doc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc , doc, query, where, serverTimestamp } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyD3-suEnEGOrK0N_jxEtwPYCnJv9zxSens",
-    authDomain: "bookmark-21800.firebaseapp.com",
-    projectId: "bookmark-21800",
-    storageBucket: "bookmark-21800.appspot.com",
-    messagingSenderId: "334603433665",
-    appId: "1:334603433665:web:3b6fd4af877d386c060640"
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_API_ID
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore()
+const db = getFirestore(app)
 const colRef = collection(db, "bookmarks")
 
 function deleteEvent() {
