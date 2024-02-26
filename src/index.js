@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc , doc, query, where, serverTimestamp } from "firebase/firestore";
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth"
 
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -102,3 +103,40 @@ categoryList.addEventListener("click", event => {
         event.target.classList.add("active")
     }
 })
+
+const auth = getAuth()
+
+function registerUser(email, password) {
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user
+            console.log('User created: ', user)
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message
+            console.error(errorCode, errorMessage)
+        })
+}
+
+function loginUser(email, password) {
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user
+            console.log('User logged in: ', user)
+        })
+        .catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+
+            console.error(errorCode, errorMessage)
+        })
+}
+
+function logoutUser() {
+    signOut(auth).then(() => {
+        console.log('User signed out')
+    }).catch((error) => {
+        console.error('Sign out error', error)
+    })
+}
